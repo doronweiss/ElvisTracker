@@ -8,10 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Accord.Video.DirectShow;
+using ElvisTracker.VideoUtils;
 
 namespace ElvisTracker {
   public partial class MainForm : Form {
     FilterInfoCollection videoDevices;
+    VidFileWriter vfw = new VidFileWriter();
 
     public MainForm() {
       InitializeComponent();
@@ -37,7 +39,8 @@ namespace ElvisTracker {
     }
 
     private void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
-
+      StopCameras();
+      vfw?.CloseVidFile();
     }
 
     private void StartCaptureBTN_Click(object sender, EventArgs e) {
@@ -70,5 +73,19 @@ namespace ElvisTracker {
       videoSourcePlayer.WaitForStop();
     }
 
+    private bool isNewFile = true;
+    private void VideoSourcePlayer_NewFrame(object sender, ref Bitmap image) {
+      if (isNewFile) {
+        DateTime dt = DateTime.Now;
+        string fname = $"{dt.Year:D4}{dt.Month:D2}{dt.Day:D2}{dt.Hour:D2}{dt.Minute:D2}{dt.Second:D2}";
+        if (!vfw.MakeVidFile(fname, image.Width, image.Height)) {
+          StopCameras();
+          return;
+        }
+        isNewFile = false;
+        return;
+      }
+      vfw.AddFrame(image);
+    }
   }
 }
