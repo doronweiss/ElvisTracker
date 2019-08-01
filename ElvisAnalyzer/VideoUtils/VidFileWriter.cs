@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Accord.Video.DirectShow;
 using Accord.Video.FFMPEG;
 
-namespace ElvisTracker.VideoUtils {
+namespace ElvisAnalyzer.VideoUtils {
   class VidFileWriter {
     private int frameIdx = 0;
     VideoFileWriter vfw = new VideoFileWriter();
@@ -27,9 +27,9 @@ namespace ElvisTracker.VideoUtils {
       System.Diagnostics.Debug.WriteLine($"Wrote total of {frameIdx} frames");
     }
 
-    public void AddFrame(Bitmap frame) {
-      frameIdx++;
-      vfw?.WriteVideoFrame(frame);
-    }
+//    public void AddFrame(Bitmap frame) {
+//      frameIdx++;
+//      vfw?.WriteVideoFrame(frame);
+//    }
   }
 }
