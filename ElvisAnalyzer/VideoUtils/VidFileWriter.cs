@@ -27,9 +27,13 @@ namespace ElvisAnalyzer.VideoUtils {
       System.Diagnostics.Debug.WriteLine($"Wrote total of {frameIdx} frames");
     }
 
-//    public void AddFrame(Bitmap frame) {
-//      frameIdx++;
-//      vfw?.WriteVideoFrame(frame);
-//    }
+    public void AddFrame(Image img) {
+      AddFrame((Bitmap) img);
+    }
+
+    public void AddFrame(Bitmap frame) {
+      frameIdx++;
+      vfw?.WriteVideoFrame(frame);
+    }
   }
 }

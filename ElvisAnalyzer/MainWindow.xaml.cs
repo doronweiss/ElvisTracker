@@ -18,6 +18,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Accord.Video;
 using Accord.Video.DirectShow;
+using ElvisAnalyzer.VideoUtils;
 
 namespace ElvisAnalyzer {
   /// <summary>
@@ -26,6 +27,7 @@ namespace ElvisAnalyzer {
   public partial class MainWindow : Window {
     FilterInfoCollection videoDevices;
     VideoCaptureDevice camera;
+    VidFileWriter vfw = new VidFileWriter();
 
     public MainWindow() {
       InitializeComponent();
@@ -51,26 +53,37 @@ namespace ElvisAnalyzer {
     }
 
     private void OnWindowClosing(object sender, System.ComponentModel.CancelEventArgs e) {
-
+      StopCameras();
+      vfw?.CloseVidFile();
     }
 
-    private bool firstStart = true;
     private void OnStartBtnClick(object sender, RoutedEventArgs e) {
-
+      StartCameras();
+      startCaptureBTN.IsEnabled = false;
+      stopCaptureBTN.IsEnabled = true;
     }
 
     private void OnStopBtnClick(object sender, RoutedEventArgs e) {
-
+      StopCameras();
+      startCaptureBTN.IsEnabled = true;
+      stopCaptureBTN.IsEnabled = false;
     }
 
     // Start cameras
     private void StartCameras() {
-      if (cameraSelectyCB.SelectedIndex < 0)
-        return;
-      // create first video source
-      camera = new VideoCaptureDevice(videoDevices[cameraSelectyCB.SelectedIndex].MonikerString);
-      camera.NewFrame += new NewFrameEventHandler(OnNewFrame);
+      if (camera == null) {
+        if (cameraSelectyCB.SelectedIndex < 0)
+          return;
+        // create first video source
+        camera = new VideoCaptureDevice(videoDevices[cameraSelectyCB.SelectedIndex].MonikerString);
+        if (camera == null) {
+          MessageBox.Show("Failed creating camera");
+          return;
+        }
+        camera.NewFrame += new NewFrameEventHandler(OnNewFrame);
+      }
       camera.Start();
+      cameraSelectyCB.IsEnabled = false;
     }
 
     // Stop cameras
@@ -79,10 +92,20 @@ namespace ElvisAnalyzer {
     }
 
 
+    private bool firstStart = true;
     void OnNewFrame(object sender, NewFrameEventArgs eventArgs) {
+      System.Drawing.Image img = (Bitmap)eventArgs.Frame.Clone();
+      if (firstStart) {
+        DateTime dt = DateTime.Now;
+        string fname = $"{dt.Year:D4}{dt.Month:D2}{dt.Day:D2}{dt.Hour:D2}{dt.Minute:D2}{dt.Second:D2}";
+        if (!vfw.MakeVidFile(fname, img.Width, img.Height)) {
+          StopCameras();
+          return;
+        }
+        firstStart = false;
+        return;
+      }
       try {
-        System.Drawing.Image img = (Bitmap)eventArgs.Frame.Clone();
-
         MemoryStream ms = new MemoryStream();
         img.Save(ms, ImageFormat.Bmp);
         ms.Seek(0, SeekOrigin.Begin);
@@ -96,6 +119,7 @@ namespace ElvisAnalyzer {
         {
           frameHolder.Source = bi;
         }));
+        vfw?.AddFrame(img);
       } catch (Exception ex) {
       }
     }
