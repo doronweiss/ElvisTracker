@@ -27,7 +27,7 @@
           <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Button Name="startCaptureBTN" Content="Start" Margin="5,5" Click="OnStartBtnClick"/>
-        <Button Name="stopCaptureBTN" Grid.Column="1" Content="Start" Margin="5,5" Click="OnStopBtnClick"/>
+        <Button Name="stopCaptureBTN" Grid.Column="1" Content="Stop" Margin="5,5" Click="OnStopBtnClick"/>
       </Grid>
     </Grid>
     </Grid>

@@ -98,7 +98,8 @@ namespace ElvisAnalyzer {
       if (firstStart) {
         DateTime dt = DateTime.Now;
         string fname = $"{dt.Year:D4}{dt.Month:D2}{dt.Day:D2}{dt.Hour:D2}{dt.Minute:D2}{dt.Second:D2}";
-        if (!vfw.MakeVidFile(fname, img.Width, img.Height)) {
+        VideoCapabilities vc = camera.VideoCapabilities.FirstOrDefault(x => x.FrameSize.Width == img.Width && x.FrameSize.Height == img.Height);
+        if (vc == null || !vfw.MakeVidFile(fname, img.Width, img.Height, vc.AverageFrameRate)) {
           StopCameras();
           return;
         }

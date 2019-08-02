@@ -12,10 +12,10 @@ namespace ElvisAnalyzer.VideoUtils {
     private int frameIdx = 0;
     VideoFileWriter vfw = new VideoFileWriter();
 
-    public bool MakeVidFile(string fileName, int width, int height) {
+    public bool MakeVidFile(string fileName, int width, int height, int frameRate) {
       try {
         vfw = new VideoFileWriter();
-        vfw.Open(fileName, width, height);
+        vfw.Open(fileName, width, height, frameRate, VideoCodec.MSMPEG4v3);
       } catch (Exception ex) {
         return false;
       }
