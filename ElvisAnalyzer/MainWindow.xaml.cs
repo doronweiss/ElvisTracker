@@ -38,8 +38,11 @@ namespace ElvisAnalyzer {
       try {
         // enumerate video devices
         videoDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
-        if (videoDevices.Count == 0)
-          throw new Exception();
+        if (videoDevices.Count == 0) {
+          MessageBox.Show("No cameras");
+          Close();
+          return;
+        }
         for (int i = 1, n = videoDevices.Count; i <= n; i++) {
           string cameraName = i + " : " + videoDevices[i - 1].Name;
           cameraSelectyCB.Items.Add(cameraName);
@@ -88,7 +91,7 @@ namespace ElvisAnalyzer {
 
     // Stop cameras
     private void StopCameras() {
-      camera.Stop();
+      camera?.Stop();
     }
 
 

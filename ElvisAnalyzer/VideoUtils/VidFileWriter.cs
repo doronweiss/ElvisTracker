@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,8 +32,17 @@ namespace ElvisAnalyzer.VideoUtils {
       AddFrame((Bitmap) img);
     }
 
+    RectangleF rectf = new RectangleF(640, 10, 120, 30);
+    private Font dtFont = new Font("Tahoma", 18);
     public void AddFrame(Bitmap frame) {
       frameIdx++;
+      DateTime dt = DateTime.Now;
+      Graphics g = Graphics.FromImage(frame);
+      // g.SmoothingMode = SmoothingMode.AntiAlias;
+      // g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+      // g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+      g.DrawString(dt.ToLongTimeString(), dtFont, Brushes.Black, rectf);
+      g.Flush();      
       vfw?.WriteVideoFrame(frame);
     }
   }
