@@ -13,7 +13,7 @@ using ElvisTracker.VideoUtils;
 namespace ElvisTracker {
   public partial class MainForm : Form {
     FilterInfoCollection videoDevices;
-    VidFileWriter vfw = new VidFileWriter();
+    VidFileWriter vfw = new VidFileWriter(false);
 
     public MainForm() {
       InitializeComponent();

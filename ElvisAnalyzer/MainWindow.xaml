@@ -12,7 +12,7 @@
       <ColumnDefinition Width="637*"/>
       <ColumnDefinition Width="155*"/>
     </Grid.ColumnDefinitions>
-      <Image HorizontalAlignment="Stretch" Name="frameHolder"  VerticalAlignment="Stretch"  Stretch="Fill"/>
+      <local:ELImage HorizontalAlignment="Stretch" x:Name="frameHolder"  VerticalAlignment="Stretch"  Stretch="Fill"/>
     <Grid Grid.Column="1">
       <Grid.RowDefinitions>
         <RowDefinition Height="Auto"/>
