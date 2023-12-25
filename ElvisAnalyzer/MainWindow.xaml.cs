@@ -118,7 +118,7 @@ namespace ElvisAnalyzer {
 
     // Stop cameras
     private void StopCameras() {
-      camera.Stop();
+      camera?.Stop();
     }
 
 
