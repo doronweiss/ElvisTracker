@@ -7,9 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              Loaded="OnControlLoaded" Unloaded="OnControlUnLoaded">
-  <local:ELCanvas x:Name="mainCanvas" Background="Bisque" SizeChanged="OnCanvasSizeChanged">
-    <Ellipse Name="radarCirc" 
-         Stroke="{Binding Path=circleColorDP, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
-         StrokeThickness="10"/>
+  <local:ELCanvas x:Name="mainCanvas" SizeChanged="OnCanvasSizeChanged"
+                  Background="{Binding Path=backgroundColorDP, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}">
   </local:ELCanvas>
 </UserControl>

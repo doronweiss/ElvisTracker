@@ -22,11 +22,17 @@ namespace ElvisOnRadar.UserControls {
   public partial class RadarDisplay : UserControl {
     #region dependency properties
     public static readonly DependencyProperty circleColorPRoperty = DependencyProperty.Register(
-      "circleColorDP", typeof(SolidColorBrush), typeof(RadarDisplay), new PropertyMetadata(Brushes.Blue));
+      "circleColorDP", typeof(SolidColorBrush), typeof(RadarDisplay), new PropertyMetadata(Brushes.Yellow));
+    public static readonly DependencyProperty backgroundColorPRoperty = DependencyProperty.Register(
+      "backgroundColorDP", typeof(SolidColorBrush), typeof(RadarDisplay), new PropertyMetadata(Brushes.Black));
 
     public SolidColorBrush circleColor {
       get => (SolidColorBrush)GetValue(circleColorPRoperty);
       set => SetValue(circleColorPRoperty, value);
+    }
+    public SolidColorBrush backgroundColor {
+      get => (SolidColorBrush)GetValue(backgroundColorPRoperty);
+      set => SetValue(backgroundColorPRoperty, value);
     }
     #endregion dependency properties
     public delegate void ImageRenderDelegate(DrawingContext dc);
@@ -36,14 +42,12 @@ namespace ElvisOnRadar.UserControls {
       InitializeComponent();
     }
 
+    // radar circle size data
+    private double cntrX, cntrY, radius;
     private void OnCanvasSizeChanged(object sender, SizeChangedEventArgs e) {
-      //Canvas.Left = "0" Canvas.Top = "0" Canvas.Right = "0" Canvas.Bottom = "0"
-      // double w = mainCanvas.ActualWidth;
-      // double h = mainCanvas.ActualHeight;
-      // Canvas.SetLeft(radarCirc, 0.0);
-      // Canvas.SetTop(radarCirc, 0.0);
-      // Canvas.SetRight(radarCirc, w);
-      // Canvas.SetBottom(radarCirc, h);
+      double w = mainCanvas.ActualWidth;
+      double h = mainCanvas.ActualHeight;
+      (cntrX, cntrY, radius) = (w / 2.0, h / 2.0, w <= h ?  w / 2.0 : h / 2.0);
     }
 
     private void OnControlLoaded(object sender, RoutedEventArgs e) {
@@ -55,14 +59,8 @@ namespace ElvisOnRadar.UserControls {
     }
 
     void OnCanvasRendered(DrawingContext dc) {
-      // counter++;
-      // foreach (var r in rects) {
-      //   dc.DrawRectangle(System.Windows.Media.Brushes.Red, null, r);
-      // }
-      double w = mainCanvas.ActualWidth;
-      double h = mainCanvas.ActualHeight;
-      Pen p = new Pen(Brushes.Black, 5);
-      dc.DrawEllipse(null, p, new Point( w/2.0, h/2.0), w / 2.0, h / 2.0);
+      Pen p = new Pen(circleColor, 5);
+      dc.DrawEllipse(null, p, new Point( cntrX, cntrY), radius, radius);
     }
 
   }
