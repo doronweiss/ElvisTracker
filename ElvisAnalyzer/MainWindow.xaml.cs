@@ -19,6 +19,7 @@ using System.Windows.Shapes;
 using Accord.Video;
 using Accord.Video.DirectShow;
 using ElvisAnalyzer.VideoUtils;
+using Brushes = System.Drawing.Brushes;
 
 namespace ElvisAnalyzer {
   /// <summary>
@@ -27,7 +28,8 @@ namespace ElvisAnalyzer {
   public partial class MainWindow : Window {
     FilterInfoCollection videoDevices;
     VideoCaptureDevice camera;
-    VidFileWriter vfw = new VidFileWriter();
+    VidFileWriter vfw = new VidFileWriter(false);
+    List<System.Windows.Rect> rects = new List<System.Windows.Rect>();
 
     public MainWindow() {
       InitializeComponent();
@@ -53,23 +55,51 @@ namespace ElvisAnalyzer {
         cameraSelectyCB.SelectedIndex = 0;
         cameraSelectyCB.IsEnabled = false;
       }
+      // create rects
+      System.Random r = new System.Random();
+      for (int idx = 0; idx < 10; idx++) {
+        int x = r.Next(200);
+        int y = r.Next(200);
+        int w = r.Next(100);
+        int h = r.Next(100);
+        rects.Add(new Rect(new System.Windows.Point(x,y), new System.Windows.Size(w,h)));
+      }
+      // add render handler
+      frameHolder.OnImageRender += new ELImage.ImageRenderDelegate(this.OnImageRendered);
     }
 
     private void OnWindowClosing(object sender, System.ComponentModel.CancelEventArgs e) {
+      // remove render handler
+      frameHolder.OnImageRender -= this.OnImageRendered;
       StopCameras();
       vfw?.CloseVidFile();
     }
 
+    void OnImageRendered(DrawingContext dc) {
+      counter++;
+      foreach (var r in rects) {
+        dc.DrawRectangle(System.Windows.Media.Brushes.Red, null, r);
+      }
+    }
+
+    private DateTime startTime;
+    private int counter = 0;
     private void OnStartBtnClick(object sender, RoutedEventArgs e) {
       StartCameras();
       startCaptureBTN.IsEnabled = false;
       stopCaptureBTN.IsEnabled = true;
+      //
+      counter = 0;
+      startTime = DateTime.Now;
     }
 
     private void OnStopBtnClick(object sender, RoutedEventArgs e) {
       StopCameras();
       startCaptureBTN.IsEnabled = true;
       stopCaptureBTN.IsEnabled = false;
+      //
+      double secs = (DateTime.Now - startTime).TotalSeconds;
+      MessageBox.Show($"Frame rate: {counter / secs}");
     }
 
     // Start cameras
