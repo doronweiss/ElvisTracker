@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media;
+﻿using System.Windows.Media;
 
-namespace ElvisOnRadar.UserControls {
+namespace ElvisControls {
   public class ELCanvas : System.Windows.Controls.Canvas {
     public delegate void ImageRenderDelegate(DrawingContext dc);
     public ImageRenderDelegate OnImageRender;
