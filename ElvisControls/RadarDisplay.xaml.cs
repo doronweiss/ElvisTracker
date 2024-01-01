@@ -76,7 +76,7 @@ namespace ElvisControls {
     }
 
     private void RotateArrow(DirectionArrow arrow, double angle) {
-      RotateTransform rotateTransform = new RotateTransform(angle);
+      RotateTransform rotateTransform = new RotateTransform(angle, 10.0, 15.0);
       arrow.RenderTransform = rotateTransform;
     }
 
