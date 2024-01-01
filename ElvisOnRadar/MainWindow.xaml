@@ -14,8 +14,8 @@
       <RowDefinition Height="*"/>
     </Grid.RowDefinitions>
     <StackPanel Orientation="Horizontal">
-      <Button Content="Run" VerticalAlignment="Center"/>
-      <Button Content="Stop" VerticalAlignment="Center"/>
+      <Button Content="Run" VerticalAlignment="Center" Click="OnRun"/>
+      <Button Content="Stop" VerticalAlignment="Center" Click="OnStop"/>
     </StackPanel>
     <myctrls:RadarDisplay x:Name="radar" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
   </Grid>

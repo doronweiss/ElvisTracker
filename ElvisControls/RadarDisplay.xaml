@@ -7,7 +7,15 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              Loaded="OnControlLoaded" Unloaded="OnControlUnLoaded">
-  <local:ELCanvas x:Name="mainCanvas" SizeChanged="OnCanvasSizeChanged"
+    <local:ELCanvas x:Name="mainCanvas" SizeChanged="OnCanvasSizeChanged" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                   Background="{Binding Path=backgroundColorDP, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}">
+      <Ellipse Name="radrCirc" 
+               Canvas.Left="0" Canvas.Top="0" Width="100" Height="100"
+             Stroke="{Binding Path= circleColorDP, RelativeSource={RelativeSource Mode= FindAncestor, AncestorType={ x:Type UserControl}}}"
+             StrokeThickness="10" />
+    <local:DirectionArrow x:Name="arrowN" Canvas.Left="30" Canvas.Top="10"/>
+    <local:DirectionArrow x:Name="arrowE" Canvas.Left="30" Canvas.Top="50" arrowColor="#FFFF0017"/>
+    <local:DirectionArrow x:Name="arrowS" Canvas.Left="30" Canvas.Top="90" arrowColor="#FFFF0017" />
+    <local:DirectionArrow x:Name="arrowW" Canvas.Left="30" Canvas.Top="130" arrowColor="#FFFF0017" />
   </local:ELCanvas>
 </UserControl>

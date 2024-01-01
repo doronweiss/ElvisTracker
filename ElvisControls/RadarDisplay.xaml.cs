@@ -23,9 +23,9 @@ namespace ElvisControls {
       set => SetValue(backgroundColorPRoperty, value);
     }
     #endregion dependency properties
-    // callback for the application to draw data
-    // public delegate void ImageRenderDelegate(DrawingContext dc);
-    // public ImageRenderDelegate OnImageRender;
+    // radar circle size data
+    private double cntrX, cntrY, radius;
+    private double upAzimuth = 0.0;
 
     public RadarDisplay() {
       InitializeComponent();
@@ -39,18 +39,50 @@ namespace ElvisControls {
       mainCanvas.OnImageRender -= this.OnCanvasRendered;
     }
 
-    // radar circle size data
-    private double cntrX, cntrY, radius;
+    public double UpAzimut{
+      get => upAzimuth;
+      set {
+        upAzimuth = value;
+        OnCanvasSizeChanged(mainCanvas, null);
+      }
+    }
 
     private void OnCanvasSizeChanged(object sender, SizeChangedEventArgs e) {
       double w = mainCanvas.ActualWidth;
       double h = mainCanvas.ActualHeight;
       (cntrX, cntrY, radius) = (w / 2.0, h / 2.0, w <= h ? w / 2.0 : h / 2.0);
+      radius -= 30;
+      Canvas.SetLeft(radrCirc, cntrX - radius);
+      Canvas.SetTop(radrCirc, cntrY - radius);
+      radrCirc.Width = radius * 2;
+      radrCirc.Height = radius * 2;
+      // position arrows
+      // north
+      Canvas.SetLeft(arrowN, cntrX - 10);
+      Canvas.SetTop(arrowN, cntrY - radius - 30);
+      RotateArrow(arrowE, -upAzimuth);
+      // north
+      Canvas.SetLeft(arrowE, cntrX +radius);
+      Canvas.SetTop(arrowE, cntrY+15);
+      RotateArrow(arrowE, 90 - upAzimuth);
+      // north
+      Canvas.SetLeft(arrowS, cntrX - 10);
+      Canvas.SetTop(arrowS, cntrY + radius);
+      RotateArrow(arrowS, 180 - upAzimuth);
+      // north
+      Canvas.SetLeft(arrowW, cntrX - radius);
+      Canvas.SetTop(arrowW, cntrY+15);
+      RotateArrow(arrowW, -90 - upAzimuth);
+    }
+
+    private void RotateArrow(DirectionArrow arrow, double angle) {
+      RotateTransform rotateTransform = new RotateTransform(angle);
+      arrow.RenderTransform = rotateTransform;
     }
 
     void OnCanvasRendered(DrawingContext dc) {
-      Pen p = new Pen(circleColor, 5);
-      dc.DrawEllipse(null, p, new Point( cntrX, cntrY), radius, radius);
+      // Pen p = new Pen(circleColor, 5);
+      // dc.DrawEllipse(null, p, new Point( cntrX, cntrY), radius, radius);
     }
 
   }
