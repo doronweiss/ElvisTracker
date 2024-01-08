@@ -6,8 +6,9 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="AvaloniaSea.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
-        Title="AvaloniaSea">
+        Title="AvaloniaSea"
+        Opened="OnWindowOpened" >
   <Grid>
-    <controls:RadarDisplay/>
+    <controls:RadarDisplay Name="radar"/>
   </Grid>
 </Window>
