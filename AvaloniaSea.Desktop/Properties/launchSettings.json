@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "AvaloniaSea.Desktop": {
+      "commandName": "Project",
+      "workingDirectory": "../run_dir_sea"
+    }
+  }
+}

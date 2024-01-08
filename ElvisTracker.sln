@@ -7,26 +7,46 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElvisAnalyzer", "ElvisAnaly
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElvisOnRadar", "ElvisOnRadar\ElvisOnRadar.csproj", "{5D2262FE-0758-46BC-BF61-EC4E48B37E45}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElvisControls", "ElvisControls\ElvisControls.csproj", "{62FE668A-5A2B-4FBA-81E1-061ED9D04157}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElvisControls", "ElvisControls\ElvisControls.csproj", "{62FE668A-5A2B-4FBA-81E1-061ED9D04157}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvaloniaSea", "AvaloniaSea\AvaloniaSea.csproj", "{EE7B62F6-203F-4C29-AEDA-35679DB48106}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvaloniaSea.Desktop", "AvaloniaSea.Desktop\AvaloniaSea.Desktop.csproj", "{92B687D4-FD75-4D8B-A52A-58C1182A085A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Avalonia|Any CPU = Avalonia|Any CPU
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{720E7CC1-5CD1-4335-B899-624F05E7A4BF}.Avalonia|Any CPU.ActiveCfg = Avalonia|x86
 		{720E7CC1-5CD1-4335-B899-624F05E7A4BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{720E7CC1-5CD1-4335-B899-624F05E7A4BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{720E7CC1-5CD1-4335-B899-624F05E7A4BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{720E7CC1-5CD1-4335-B899-624F05E7A4BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D2262FE-0758-46BC-BF61-EC4E48B37E45}.Avalonia|Any CPU.ActiveCfg = Avalonia|Any CPU
 		{5D2262FE-0758-46BC-BF61-EC4E48B37E45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5D2262FE-0758-46BC-BF61-EC4E48B37E45}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D2262FE-0758-46BC-BF61-EC4E48B37E45}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D2262FE-0758-46BC-BF61-EC4E48B37E45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62FE668A-5A2B-4FBA-81E1-061ED9D04157}.Avalonia|Any CPU.ActiveCfg = Avalonia|Any CPU
 		{62FE668A-5A2B-4FBA-81E1-061ED9D04157}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{62FE668A-5A2B-4FBA-81E1-061ED9D04157}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62FE668A-5A2B-4FBA-81E1-061ED9D04157}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62FE668A-5A2B-4FBA-81E1-061ED9D04157}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE7B62F6-203F-4C29-AEDA-35679DB48106}.Avalonia|Any CPU.ActiveCfg = Avalonia|Any CPU
+		{EE7B62F6-203F-4C29-AEDA-35679DB48106}.Avalonia|Any CPU.Build.0 = Avalonia|Any CPU
+		{EE7B62F6-203F-4C29-AEDA-35679DB48106}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE7B62F6-203F-4C29-AEDA-35679DB48106}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE7B62F6-203F-4C29-AEDA-35679DB48106}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE7B62F6-203F-4C29-AEDA-35679DB48106}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92B687D4-FD75-4D8B-A52A-58C1182A085A}.Avalonia|Any CPU.ActiveCfg = Avalonia|Any CPU
+		{92B687D4-FD75-4D8B-A52A-58C1182A085A}.Avalonia|Any CPU.Build.0 = Avalonia|Any CPU
+		{92B687D4-FD75-4D8B-A52A-58C1182A085A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92B687D4-FD75-4D8B-A52A-58C1182A085A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92B687D4-FD75-4D8B-A52A-58C1182A085A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92B687D4-FD75-4D8B-A52A-58C1182A085A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
