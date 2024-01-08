@@ -1,11 +1,17 @@
 using Avalonia.Controls;
 using Avalonia.Logging;
 using Avalonia.Media;
+using Avalonia.Media.Imaging;
+using Avalonia.Platform;
 using Avalonia.Threading;
+using System;
+using Avalonia;
 
 namespace AvaloniaSea.Controls {
   public partial class RadarDisplay : UserControl {
     private double cntrX, cntrY, radius;
+    private double orientation = 0.0;
+    private Bitmap? ship = null;
 
     public RadarDisplay() {
       InitializeComponent();
@@ -16,6 +22,7 @@ namespace AvaloniaSea.Controls {
       Logger.TryGet(LogEventLevel.Debug, LogArea.Platform)?.Log(this, "Avalonia Infrastructure");
       System.Diagnostics.Trace.WriteLine("Initialized");
       mainCanvas.OnImageRender += new ELCanvas.ImageRenderDelegate(this.OnCanvasRendered);
+      ship = new Bitmap(AssetLoader.Open(new Uri("avares://AvaloniaSea/Assets/ship.png")));
     }
 
     private void OnCanvasSizeChanged(object sender, SizeChangedEventArgs e) {
@@ -33,6 +40,8 @@ namespace AvaloniaSea.Controls {
       dc.DrawEllipse(null, p2, new Avalonia.Point(cntrX, cntrY), radius*0.75, radius * 0.75);
       dc.DrawEllipse(null, p2, new Avalonia.Point(cntrX, cntrY), radius * 0.5, radius * 0.5);
       dc.DrawEllipse(null, p2, new Avalonia.Point(cntrX, cntrY), radius * 0.25, radius * 0.25);
+      //dc.DrawImage(ship, new Rect(0, 0, 68, 355), new Rect(cntrX-10, cntrY-50, cntrX+10, cntrY+50));
+      dc.DrawImage(ship, new Rect(cntrX-10, cntrY-50, 20, 100));
     }
 
 
