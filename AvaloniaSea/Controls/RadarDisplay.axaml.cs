@@ -5,7 +5,9 @@ using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using Avalonia.Threading;
 using System;
+using System.Collections.Generic;
 using Avalonia;
+using AvaloniaSea.Common;
 
 namespace AvaloniaSea.Controls {
   public partial class RadarDisplay : UserControl {
@@ -13,6 +15,12 @@ namespace AvaloniaSea.Controls {
     private const double R2D = 1.0 / D2R;
     private double cntrX, cntrY, radius;
     private Bitmap? ship = null;
+    private List<Detection> detections = new List<Detection>();
+    // pens
+    Pen pThickY = new Pen(Brushes.Yellow, 2.0, null, PenLineCap.Flat, PenLineJoin.Miter, 10.0);
+    Pen pThickGY = new Pen(Brushes.GreenYellow, 2.0, null, PenLineCap.Flat, PenLineJoin.Miter, 10.0);
+    Pen pThinGY = new Pen(Brushes.GreenYellow, 1.0, DashStyle.Dash, PenLineCap.Flat, PenLineJoin.Miter, 10.0);
+    Pen pThinGR = new Pen(Brushes.Red, 1.0, DashStyle.Dash, PenLineCap.Flat, PenLineJoin.Miter, 10.0);
 
     public static readonly StyledProperty<double> rotationProperty =
       AvaloniaProperty.Register<RadarDisplay, double>(nameof(Azimuth));
@@ -35,6 +43,12 @@ namespace AvaloniaSea.Controls {
       set => SetValue(rotationProperty, value);
     }
 
+    public double MaxRange { get; set; } = 10000.0;
+
+    public void UpdateDetections(List<Detection> detections) {
+      this.detections = detections;
+    }
+
     private void OnCanvasSizeChanged(object sender, SizeChangedEventArgs e) {
       double w = mainCanvas.Bounds.Width;
       double h = mainCanvas.Bounds.Height;
@@ -44,9 +58,6 @@ namespace AvaloniaSea.Controls {
     }
 
     private void OnCanvasRendered(DrawingContext dc) {
-      Pen pThickY = new Pen(Brushes.Yellow, 2.0, null, PenLineCap.Flat, PenLineJoin.Miter, 10.0);
-      Pen pThickGY = new Pen(Brushes.GreenYellow, 2.0, null, PenLineCap.Flat, PenLineJoin.Miter, 10.0);
-      Pen pThinGY = new Pen(Brushes.GreenYellow, 1.0, DashStyle.Dash, PenLineCap.Flat, PenLineJoin.Miter, 10.0);
       // draw circles
       dc.DrawEllipse(null, pThickGY, new Avalonia.Point(cntrX, cntrY), radius, radius);
       dc.DrawEllipse(null, pThinGY, new Avalonia.Point(cntrX, cntrY), radius*0.75, radius * 0.75);
@@ -61,8 +72,14 @@ namespace AvaloniaSea.Controls {
       dc.DrawLine(pThinGY, new Point(cntrX, cntrY), new Point(cntrX + radius * Math.Sin(rot), cntrY - radius * Math.Cos(rot)));
       rot += Math.PI / 2.0;
       dc.DrawLine(pThinGY, new Point(cntrX, cntrY), new Point(cntrX + radius * Math.Sin(rot), cntrY - radius * Math.Cos(rot)));
-      //dc.DrawImage(ship, new Rect(0, 0, 68, 355), new Rect(cntrX-10, cntrY-50, cntrX+10, cntrY+50));
+      // draw the ship image
       dc.DrawImage(ship, new Rect(cntrX-10, cntrY-50, 20, 100));
+      // draw detection
+      double px2m = radius / MaxRange;
+      foreach (Detection dt in detections) {
+        double detAng = (dt.azimuth - Azimuth) * D2R;
+        double detRad = dt.range * px2m;
+      }
     }
 
 

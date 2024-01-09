@@ -15,7 +15,7 @@ public partial class MainWindow : Window {
   public void OnWindowOpened(object? sender, EventArgs eventArgs) {
     timer =
       new DispatcherTimer(
-        TimeSpan.FromMilliseconds(100),
+        TimeSpan.FromMilliseconds(1000),
         DispatcherPriority.Render,
         (o, args) => {
           azimuth += 10.0;
