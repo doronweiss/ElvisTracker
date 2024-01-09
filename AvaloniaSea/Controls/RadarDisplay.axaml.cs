@@ -20,7 +20,7 @@ namespace AvaloniaSea.Controls {
     Pen pThickY = new Pen(Brushes.Yellow, 2.0, null, PenLineCap.Flat, PenLineJoin.Miter, 10.0);
     Pen pThickGY = new Pen(Brushes.GreenYellow, 2.0, null, PenLineCap.Flat, PenLineJoin.Miter, 10.0);
     Pen pThinGY = new Pen(Brushes.GreenYellow, 1.0, DashStyle.Dash, PenLineCap.Flat, PenLineJoin.Miter, 10.0);
-    Pen pThinGR = new Pen(Brushes.Red, 1.0, DashStyle.Dash, PenLineCap.Flat, PenLineJoin.Miter, 10.0);
+    Pen pThinR = new Pen(Brushes.Red, 2.0, null, PenLineCap.Flat, PenLineJoin.Miter, 10.0);
 
     public static readonly StyledProperty<double> rotationProperty =
       AvaloniaProperty.Register<RadarDisplay, double>(nameof(Azimuth));
@@ -47,6 +47,7 @@ namespace AvaloniaSea.Controls {
 
     public void UpdateDetections(List<Detection> detections) {
       this.detections = detections;
+      mainCanvas.InvalidateVisual();
     }
 
     private void OnCanvasSizeChanged(object sender, SizeChangedEventArgs e) {
@@ -79,6 +80,11 @@ namespace AvaloniaSea.Controls {
       foreach (Detection dt in detections) {
         double detAng = (dt.azimuth - Azimuth) * D2R;
         double detRad = dt.range * px2m;
+        double dx = detRad * Math.Sin(detAng);
+        double dy = -detRad * Math.Cos(detAng);
+        dc.DrawEllipse(null, pThinR, new Avalonia.Point(cntrX+dx, cntrY+dy), 5, 5);
+        // FormattedText ft = new 
+        // dc.DrawText(dt.descrition, new Avalonia.Point(cntrX + dx, cntrY + dy));
       }
     }
 
